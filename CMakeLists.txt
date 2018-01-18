@@ -47,6 +47,8 @@ include(CheckCCompilerFlag)
 
 project( CURL C )
 
+include(CTest)
+
 message(WARNING "the curl cmake build system is poorly maintained. Be aware")
 
 file (READ ${CURL_SOURCE_DIR}/include/curl/curlver.h CURL_VERSION_H_CONTENTS)
@@ -1148,7 +1150,6 @@ if(BUILD_CURL_EXE)
   add_subdirectory(src)
 endif()
 
-include(CTest)
 if(BUILD_TESTING)
   add_subdirectory(tests)
 endif()
@@ -1266,7 +1267,7 @@ set(VERSIONNUM              "${CURL_VERSION_NUM}")
 configure_file("${CURL_SOURCE_DIR}/curl-config.in"
                "${CURL_BINARY_DIR}/curl-config" @ONLY)
 install(FILES "${CURL_BINARY_DIR}/curl-config"
-        DESTINATION bin
+        DESTINATION ${CURL_INSTALL_PREFIX}/bin
         PERMISSIONS
           OWNER_READ OWNER_WRITE OWNER_EXECUTE
           GROUP_READ GROUP_EXECUTE
@@ -1276,7 +1277,7 @@ install(FILES "${CURL_BINARY_DIR}/curl-config"
 configure_file("${CURL_SOURCE_DIR}/libcurl.pc.in"
                "${CURL_BINARY_DIR}/libcurl.pc" @ONLY)
 install(FILES "${CURL_BINARY_DIR}/libcurl.pc"
-        DESTINATION lib/pkgconfig)
+        DESTINATION ${CURL_INSTALL_PREFIX}/lib/pkgconfig)
 
 # This needs to be run very last so other parts of the scripts can take advantage of this.
 if(NOT CURL_CONFIG_HAS_BEEN_RUN_BEFORE)
@@ -1285,7 +1286,7 @@ endif()
 
 # install headers
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/curl"
-    DESTINATION include
+    DESTINATION ${CURL_INSTALL_PREFIX}/include
     FILES_MATCHING PATTERN "*.h")
 
 
@@ -1304,7 +1305,7 @@ configure_file(CMake/curl-config.cmake
 install(
         FILES ${PROJECT_BINARY_DIR}/curl-config.cmake
               ${PROJECT_BINARY_DIR}/curl-config-version.cmake
-        DESTINATION ${CURL_INSTALL_CMAKE_DIR}
+        DESTINATION ${CURL_INSTALL_PREFIX}/${CURL_INSTALL_CMAKE_DIR}
 )
 
 # Workaround for MSVS10 to avoid the Dialog Hell

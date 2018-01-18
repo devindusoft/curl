@@ -76,7 +76,7 @@ set_target_properties(${EXE_NAME} PROPERTIES
 
 #INCLUDE(ModuleInstall OPTIONAL)
 
-install(TARGETS ${EXE_NAME} EXPORT curl-target DESTINATION bin)
+install(TARGETS ${EXE_NAME} EXPORT curl-target DESTINATION ${CURL_INSTALL_PREFIX}/bin)
 export(TARGETS ${EXE_NAME}
        APPEND FILE ${PROJECT_BINARY_DIR}/curl-target.cmake
        NAMESPACE CURL::
@@ -85,6 +85,6 @@ export(TARGETS ${EXE_NAME}
 install(EXPORT curl-target
         FILE curl-target.cmake
         NAMESPACE CURL::
-        DESTINATION ${CURL_INSTALL_CMAKE_DIR}
+        DESTINATION ${CURL_INSTALL_PREFIX}/${CURL_INSTALL_CMAKE_DIR}
 )
 
