@@ -110,7 +110,7 @@ if(WIN32)
 endif()
 
 target_include_directories(${LIB_NAME} INTERFACE
-	$<INSTALL_INTERFACE:include>)
+	$<INSTALL_INTERFACE:${CURL_INSTALL_PREFIX}/include>)
 
 install(TARGETS ${LIB_NAME}
   EXPORT libcurl-target
